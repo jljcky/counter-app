@@ -1,38 +1,152 @@
+:root {
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 3rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#counters-section {
+  margin-left: 10vw;
+  margin-right: 10vw;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#create-counter {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+#create-counter-title {
+  /* width: 12rem; */
+  margin: 0
+}
+
+#create-counter>form {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+#create-counter input[type=text] {
+  margin-right: 1rem;
+}
+
+#create-counter input[type=text],
+#create-counter input[type=number] {
+  padding: 1rem;
+  font-size: 1rem;
+  border-style: none;
+  border-bottom: solid black 1px;
+}
+
+#create-counter input[type=text]:focus,
+#create-counter input[type=number]:focus {
+  outline: none;
+  border-bottom: solid gold 1px;
+}
+
+#counter-name-setter {
+  display: flex;
+  flex: 1 1 auto;
+  width: 1rem;
+}
+
+#counter-count-setter {
+  width: 10%;
+}
+
+#create-counter-btn {
+  height: 54px;
+  width: 54px;
+  background-color: transparent;
+  border-style: none;
+}
+
+#create-counter-btn:hover {
+  color: gray;
+}
+
+#counters-list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 1px;
+}
+
+#counters-list-empty {
+  padding: 1rem;
+  color: gray;
+  font-style: italic;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.counter {
+  display: flex;
+  padding: 1rem;
+  padding-left: 2rem;
+  align-items: center;
+  color: white;
+  border-radius: 1rem;
+}
+
+.counter:not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+.counter-name {
+  width: 20%;
+  word-wrap: break-word;
+  padding-right: 1rem;
+  text-align: start;
+}
+
+.counter-main {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.counter-count {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.inc-counter-btn,
+.dec-counter-btn,
+.rm-counter-btn {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: white;
+  border-style: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:focus {
+  outline: none
 }

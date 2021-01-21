@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons'
+
+
+library.add(faPlus, faMinus, faTimes)
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
