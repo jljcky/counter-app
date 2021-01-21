@@ -10,6 +10,8 @@ import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faPlus, faMinus, faTimes)
 
+console.log(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`)
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

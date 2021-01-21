@@ -11,9 +11,20 @@ function App() {
   const [counterSettings, setCounterSettings] = useState({name: "", count: 0});
 
   useEffect(() => {
-    let stored = localStorage.getItem('counters');
-    if (stored) {
-      setCounters(JSON.parse(stored));
+    let currentVersion = localStorage.getItem('version');
+    if (currentVersion) {
+      if (currentVersion === process.env.REACT_APP_VERSION) {
+        let stored = localStorage.getItem('counters');
+        if (stored) {
+          setCounters(JSON.parse(stored));
+        }
+      } else {
+        localStorage.clear();
+        localStorage.setItem('version', process.env.REACT_APP_VERSION);
+      }
+    } else {
+      localStorage.clear();
+      localStorage.setItem('version', process.env.REACT_APP_VERSION);
     }
   }, []);
 
@@ -86,6 +97,11 @@ function App() {
           }
         </div>
       </div>
+
+      <footer className="App-footer">
+        <span>{process.env.REACT_APP_NAME} by Jacky Lo</span>
+        <span>v. {process.env.REACT_APP_VERSION}</span>
+      </footer>
     </div>
   );
 }
