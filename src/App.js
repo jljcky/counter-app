@@ -6,26 +6,33 @@ import {v4 as uuidv4} from 'uuid';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGreaterThan} from '@fortawesome/free-solid-svg-icons';
 
+const MAX_COUNT = 999999;
+const MIN_COUNT = -999999;
+
 function App() {
   const [counters, setCounters] = useState([]);
   const [counterSettings, setCounterSettings] = useState({name: "", count: 0});
 
   useEffect(() => {
-    let currentVersion = localStorage.getItem('version');
-    if (currentVersion) {
-      if (currentVersion === process.env.REACT_APP_VERSION) {
-        let stored = localStorage.getItem('counters');
-        if (stored) {
-          setCounters(JSON.parse(stored));
-        }
-      } else {
-        localStorage.clear();
-        localStorage.setItem('version', process.env.REACT_APP_VERSION);
-      }
-    } else {
-      localStorage.clear();
-      localStorage.setItem('version', process.env.REACT_APP_VERSION);
+    let stored = localStorage.getItem('counters');
+    if (stored) {
+      setCounters(JSON.parse(stored));
     }
+    // let currentVersion = localStorage.getItem('version');
+    // if (currentVersion) {
+    //   if (currentVersion === process.env.REACT_APP_VERSION) {
+    //     let stored = localStorage.getItem('counters');
+    //     if (stored) {
+    //       setCounters(JSON.parse(stored));
+    //     }
+    //   } else {
+    //     localStorage.clear();
+    //     localStorage.setItem('version', process.env.REACT_APP_VERSION);
+    //   }
+    // } else {
+    //   localStorage.clear();
+    //   localStorage.setItem('version', process.env.REACT_APP_VERSION);
+    // }
   }, []);
 
   useEffect(() => {
@@ -38,7 +45,7 @@ function App() {
       {
         name: counterSettings.name ? counterSettings.name : "New Counter", 
         id: uuidv4(), 
-        count: parseInt(counterSettings.count),
+        count: counterSettings.count,
         hsl: {
           hue: Math.floor(Math.random() * 360),
           saturation: '50%',
@@ -56,15 +63,20 @@ function App() {
     let newList = [...counters];
     newList.forEach(counter => {
       if (counter.id === id) {
-        counter.count = value;
+        counter.count = value > MAX_COUNT ? MAX_COUNT : (value < MIN_COUNT ? MIN_COUNT : value);
       }
     });
     setCounters(newList);
-
   };
 
-  const changeSettings = (e, type) => {
-    setCounterSettings(counterSettings => ({...counterSettings, [type]: e.target.value}));
+  const changeSettingsName = (e) => {
+    setCounterSettings(counterSettings => ({...counterSettings, name: e.target.value}));
+  }
+
+  const changeSettingsCount = (e) => {
+    let c = parseInt(e.target.value);
+    console.log(process.env.MAX_COUNT);
+    setCounterSettings(counterSettings => ({...counterSettings, count: c > MAX_COUNT ? MAX_COUNT : c}));
   }
 
   return (
@@ -77,8 +89,8 @@ function App() {
         <div id="create-counter">
           <h3 id="create-counter-title" >Create a counter to get started</h3>
           <form onSubmit={(e) => createCounter(e)}>
-            <input id="counter-name-setter" type="text" value={counterSettings.name} placeholder="Name..." onChange={(e) => changeSettings(e, 'name')}></input>
-            <input id="counter-count-setter" type="number" value={counterSettings.count} placeholder="Count..." onChange={(e) => changeSettings(e, 'count')}></input>
+            <input id="counter-name-setter" type="text" value={counterSettings.name} placeholder="Name..." onChange={(e) => changeSettingsName(e)}></input>
+            <input id="counter-count-setter" type="number" value={counterSettings.count} placeholder="Count..." onChange={(e) => changeSettingsCount(e)}></input>
             <button id="create-counter-btn">
               <FontAwesomeIcon icon={faGreaterThan}  size="lg"/>
             </button>
@@ -88,7 +100,7 @@ function App() {
         <div id="counters-list">
           {counters.length ? 
           counters.map((counter) => (
-            <Counter key={counter.id} counter={counter} change={changeCounter} remove={removeCounter}/>
+            <Counter key={counter.id} counter={counter} changeCount={changeCounter} remove={removeCounter} />
           )) 
           : 
           <div id="counters-list-empty">
@@ -99,8 +111,7 @@ function App() {
       </div>
 
       <footer className="App-footer">
-        <span>{process.env.REACT_APP_NAME} by Jacky Lo</span>
-        <span>v. {process.env.REACT_APP_VERSION}</span>
+        <span>{process.env.REACT_APP_NAME} v. {process.env.REACT_APP_VERSION} by Jacky Lo</span>
       </footer>
     </div>
   );

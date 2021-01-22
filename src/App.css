@@ -7,10 +7,10 @@ button:focus {
 }
 
 .App {
-  text-align: center;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .App-header {
@@ -41,8 +41,7 @@ button:focus {
 }
 
 #create-counter-title {
-  /* width: 12rem; */
-  margin: 0
+  margin: 0;
 }
 
 #create-counter>form {
@@ -102,19 +101,17 @@ button:focus {
   padding: 1rem;
   color: gray;
   font-style: italic;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 1rem;
 }
 
 .counter {
   display: flex;
   padding: 1rem;
-  padding-left: 2rem;
   align-items: center;
   color: white;
   border-radius: 1rem;
+  min-height: 2rem;
+  user-select: none;
 }
 
 .counter:not(:last-of-type) {
@@ -122,26 +119,32 @@ button:focus {
 }
 
 .counter-name {
-  width: 20%;
-  word-wrap: break-word;
+  padding-left: 1rem;
   padding-right: 1rem;
   text-align: start;
+  flex-grow: 1;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0px;
 }
 
 .counter-main {
   display: flex;
-  flex-grow: 1;
-  align-items: center;
+  margin-right: 10px;
 }
 
 .counter-count {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
-.inc-counter-btn,
-.dec-counter-btn,
-.rm-counter-btn {
+.settings-btn {
+  margin-right: 10px;
+}
+
+.counter button {
   width: 1.5rem;
   height: 1.5rem;
   background-color: white;
@@ -152,12 +155,17 @@ button:focus {
   justify-content: center;
 }
 
+/* .counter button:active {
+  background-color: black;
+} */
+
 .App-footer {
   background-color: #282c34;
-  height: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
+  font-size: 12px;
+  padding: 0.3rem;
 }
