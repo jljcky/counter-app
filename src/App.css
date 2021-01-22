@@ -111,12 +111,17 @@ button:focus {
   color: white;
   border-radius: 1rem;
   min-height: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.counter * {
   user-select: none;
 }
 
-.counter:not(:last-of-type) {
+/* .counter:not(:last-of-type) {
   margin-bottom: 1rem;
-}
+} */
 
 .counter-name {
   padding-left: 1rem;
@@ -154,10 +159,6 @@ button:focus {
   align-items: center;
   justify-content: center;
 }
-
-/* .counter button:active {
-  background-color: black;
-} */
 
 .App-footer {
   background-color: #282c34;

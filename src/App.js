@@ -5,6 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGreaterThan} from '@fortawesome/free-solid-svg-icons';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 const MAX_COUNT = 999999;
 const MIN_COUNT = -999999;
@@ -79,41 +80,75 @@ function App() {
     setCounterSettings(counterSettings => ({...counterSettings, count: c > MAX_COUNT ? MAX_COUNT : c}));
   }
 
+  const onDragEnd = (result) => {
+    const {source, destination, draggableId} = result;
+    if (!destination) {
+      return;
+    }
+
+    if (destination.droppableId === source.droppableId &&
+      destination.index === source.index) {
+      return;
+    }
+    
+    const movedCounter = counters[source.index];
+    let newList = [...counters];
+    newList.splice(source.index, 1);
+    newList.splice(destination.index, 0, movedCounter);
+
+    setCounters(newList);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h2>Counter App</h2>
-      </header>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="App">
+        <header className="App-header">
+          <h2>Counter App</h2>
+        </header>
 
-      <div id="counters-section">
-        <div id="create-counter">
-          <h3 id="create-counter-title" >Create a counter to get started</h3>
-          <form onSubmit={(e) => createCounter(e)}>
-            <input id="counter-name-setter" type="text" value={counterSettings.name} placeholder="Name..." onChange={(e) => changeSettingsName(e)}></input>
-            <input id="counter-count-setter" type="number" value={counterSettings.count} placeholder="Count..." onChange={(e) => changeSettingsCount(e)}></input>
-            <button id="create-counter-btn">
-              <FontAwesomeIcon icon={faGreaterThan}  size="lg"/>
-            </button>
-          </form>
-        </div>
-
-        <div id="counters-list">
-          {counters.length ? 
-          counters.map((counter) => (
-            <Counter key={counter.id} counter={counter} changeCount={changeCounter} remove={removeCounter} />
-          )) 
-          : 
-          <div id="counters-list-empty">
-            <span>No counters at the moment. Create one now!</span>
+        <div id="counters-section">
+          <div id="create-counter">
+            <h3 id="create-counter-title" >Create a counter to get started</h3>
+            <form onSubmit={createCounter}>
+              <input id="counter-name-setter" type="text" value={counterSettings.name} placeholder="Name..." onChange={changeSettingsName}></input>
+              <input id="counter-count-setter" type="number" value={counterSettings.count} placeholder="Count..." onChange={changeSettingsCount}></input>
+              <button id="create-counter-btn">
+                <FontAwesomeIcon icon={faGreaterThan}  size="lg"/>
+              </button>
+            </form>
           </div>
-          }
-        </div>
-      </div>
 
-      <footer className="App-footer">
-        <span>{process.env.REACT_APP_NAME} v. {process.env.REACT_APP_VERSION} by Jacky Lo</span>
-      </footer>
-    </div>
+          <Droppable droppableId={"droppable-counters"}>
+            {
+              (provided, snapshot) => (
+                <div id="counters-list" ref={provided.innerRef} {...provided.droppableProps}>
+                  {counters.length ? 
+                  counters.map((counter, index) => (
+                    <Draggable key={counter.id} draggableId={"draggable-"+counter.id} index={index}>
+                      {
+                        (provided, snapshot) => (
+                          <Counter ref={provided.innerRef} counter={counter} changeCount={changeCounter} remove={removeCounter} provided={provided}/>
+                        )
+                      }
+                    </Draggable>
+                  )) 
+                  : 
+                  <div id="counters-list-empty">
+                    <span>No counters at the moment. Create one now!</span>
+                  </div>
+                  }
+                  {provided.placeholder}
+                </div>
+              )
+            }
+          </Droppable>
+        </div>
+
+        <footer className="App-footer">
+          <span>{process.env.REACT_APP_NAME} v. {process.env.REACT_APP_VERSION} by Jacky Lo</span>
+        </footer>
+      </div>
+    </DragDropContext>
   );
 }
 
