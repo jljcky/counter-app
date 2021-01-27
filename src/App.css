@@ -106,22 +106,51 @@ button:focus {
 
 .counter {
   display: flex;
-  padding: 1rem;
+  flex: 1 1 auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   align-items: center;
   color: white;
   border-radius: 1rem;
   min-height: 2rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+}
+
+.counter-anim-appear {
+  opacity: 0;
+}
+
+.counter-anim-appear-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+
+.counter-anim-appear-done {
+  opacity: 1;
+}
+
+/* .counter-anim-enter {
+  opacity: 0;
+}
+
+.counter-anim-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+} */
+
+.counter-anim-exit {
+  opacity: 1;
+}
+
+.counter-anim-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
 }
 
 .counter * {
   user-select: none;
 }
-
-/* .counter:not(:last-of-type) {
-  margin-bottom: 1rem;
-} */
 
 .counter-name {
   padding-left: 1rem;
@@ -158,6 +187,7 @@ button:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .App-footer {

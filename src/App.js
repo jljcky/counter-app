@@ -81,7 +81,7 @@ function App() {
   }
 
   const onDragEnd = (result) => {
-    const {source, destination, draggableId} = result;
+    const {source, destination} = result;
     if (!destination) {
       return;
     }
