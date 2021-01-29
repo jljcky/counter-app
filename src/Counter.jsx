@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
 
@@ -8,29 +8,22 @@ const Counter = React.forwardRef(({ counter, changeCount, remove, provided }, re
     const [counterIn, setCounterIn] = useState(true);
 
     const getItemStyle = (style) => ({
-        display: 'flex',
         marginBottom: "1rem",
         ...style
     });
-
-    // useEffect(() => {
-    //     setCounterIn(true);
-    // }, [])
-
     return (
         <div
             ref={ref}
             {...provided.draggableProps}
-            {...provided.dragHandleProps}
             style={getItemStyle(provided.draggableProps.style)}
         >
             <CSSTransition classNames="counter-anim" nodeRef={nodeRef} in={counterIn} appear unmountOnExit onExited={() => remove(counter.id)} timeout={200}>
 
                 <div className="counter" ref={nodeRef} style={{ backgroundColor: `hsl(${counter.hsl.hue}, ${counter.hsl.saturation}, ${counter.hsl.lightness})` }}>
-                    {/* <div >
+                    <div className="counter-drag-handle" {...provided.dragHandleProps}>
                         <FontAwesomeIcon icon="bars" size="2x" color="white" />
-                    </div> */}
-                    <span className="counter-name">{counter.name}</span>
+                    </div>
+                    <div className="counter-name">{counter.name}</div>
                     <div className="counter-main">
                         <button className="inc-counter-btn" onClick={() => changeCount(counter.id, counter.count - 1)}>
                             <FontAwesomeIcon icon="minus" size="lg" color={`hsl(${counter.hsl.hue}, ${counter.hsl.saturation}, ${counter.hsl.lightness})`} />
