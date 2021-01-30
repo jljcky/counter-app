@@ -163,6 +163,11 @@ input[type=number] {
   transition: opacity 200ms;
 }
 
+.counter-move-up {
+  transform: translateY(-48px);
+  transition: transform 200ms;
+}
+
 .counter-name {
   padding-left: 1rem;
   padding-right: 1rem;

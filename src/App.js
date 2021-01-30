@@ -47,17 +47,25 @@ function App() {
         name: counterSettings.name ? counterSettings.name : "New Counter", 
         id: uuidv4(), 
         count: counterSettings.count,
-        hsl: {
-          hue: Math.floor(Math.random() * 360),
-          saturation: '50%',
-          lightness: '50%',
-        }
+        hue: Math.floor(Math.random() * 360)
        }]) );
     setCounterSettings({name: '', count: 0})
   }
 
   const removeCounter = (id) => {
     setCounters((counters) => (counters.filter(counter => counter.id !== id)));
+  }
+
+  /**
+   * 
+   * @param {counter id} id the counter's id
+   * @param {counter info} values an object containing the counter's updated info
+   */
+  const updateCounter = (id, values) => {
+    const counterObj = counters.find(counter => counter.id === id);
+    if (counterObj) {
+      
+    }
   }
 
   const changeCounter = (id, value) => {
@@ -127,7 +135,7 @@ function App() {
                     <Draggable key={counter.id} draggableId={"draggable-"+counter.id} index={index}>
                       {
                         (provided, snapshot) => (
-                          <Counter ref={provided.innerRef} counter={counter} changeCount={changeCounter} remove={removeCounter} provided={provided}/>
+                          <Counter ref={provided.innerRef} counter={counter} changeCount={changeCounter} remove={removeCounter} update={updateCounter} provided={provided}/>
                         )
                       }
                     </Draggable>
